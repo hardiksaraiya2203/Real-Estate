@@ -15,8 +15,8 @@ import { Breadcrumb, SimpleCard } from "app/components";
 import SimpleForm from "../material-kit/forms/SimpleForm";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { leadLoading } from "slice/leadSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { editLeadRequest, leadLoading } from "slice/leadSlice";
 import { Span } from "app/components/Typography";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import Lead from "./Lead";
@@ -30,12 +30,10 @@ const Container = styled("div")(({ theme }) => ({
     [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
   },
 }));
-// const TextField = styled(TextValidator)(() => ({
-//   width: "100%",
-//   marginBottom: "16px",
-// }));
 
 export default function LeadForm(props) {
+  const d = useSelector((y) => y.lead?.editObj?.lead);
+
   const [state, setState] = useState({
     leadStatus: "",
     leadName: "",
@@ -57,11 +55,39 @@ export default function LeadForm(props) {
     });
   };
 
+  const { open, onClose, editId } = props;
+
+  useEffect(() => {
+    if (editId) {
+      dis(editLeadRequest(editId));
+    }
+  }, [editId]);
+
+  useEffect(() => {
+
+
+    if (d) {
+      setState({
+        leadStatus: d.leadStatus,
+        leadName: d.leadName,
+        leadEmail: d.leadEmail,
+        leadPhoneNumber: d.leadPhoneNumber,
+        moduleId: "66594807544b0e6c5b3645c9",
+      });
+    } else {
+      setState({
+        leadStatus: "",
+        leadName: "",
+        leadEmail: "",
+        leadPhoneNumber: "",
+        moduleId: "66594807544b0e6c5b3645c9",
+      });
+    }
+  }, [d]);
+
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.value });
   };
-
-  const { open, onClose } = props;
 
   const { leadStatus, leadName, leadEmail, leadPhoneNumber } = state;
 

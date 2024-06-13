@@ -14,3 +14,16 @@ export const getLead = async () => {
 
   return data.data;
 };
+
+export const deleteLead = async (data1) => {
+  let data = await authFetch.post("/lead/deleteMany",data1);
+
+  return data.data;
+};
+
+export const editLead = async (editId) => {
+  let data = await authFetch.get("/lead/view/"+editId);
+
+  return data.data;
+}; 
+

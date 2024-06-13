@@ -4,7 +4,9 @@ const initialState = {
   lead: [],
   data: [],
   error: null,
-  isLoading: false
+  isLoading: false,
+  deleteInfo: {},
+  editObj : {}
 };
 
 const leadSlice = createSlice({
@@ -33,10 +35,41 @@ const leadSlice = createSlice({
     getLeadError: (state, actions) => {
       state.isLoading = false;
       state.error = actions.payload;
-    }
-  }
-});
+    },
+    deleteLeadLoading: (state, actions) => {  
+      state.isLoading = true;
+    },  
+    deleteLeadSuccess: (state, actions) => {  
+      state.isLoading = false;
+      state.deleteInfo = actions.payload;
+    },  
+    deleteLeadError: (state, actions) => {      
+      state.isLoading = false;
+      state.error = actions.payload;
+    },  
+    editLeadRequest: (state, actions) => {  
 
-export const { leadLoading, leadSuccess, leadError, getLeadLoading, getLeadSuccess, getLeadError } = leadSlice.actions;
+      state.isLoading = true;  
+  } ,
+  editLeadRequestError: (state, actions) => { 
+
+    state.isLoading = false;
+    state.error = actions.payload;
+
+  },
+  editLeadRequestSuccess: (state, actions) => { 
+
+    state.isLoading = false;
+        state.editObj = actions.payload;
+      
+  }
+  }
+}
+
+);
+
+export const { leadLoading, leadSuccess, leadError, getLeadLoading,
+   getLeadSuccess, getLeadError,deleteLeadLoading,deleteLeadSuccess,deleteLeadError,
+   editLeadRequest,editLeadRequestError,editLeadRequestSuccess } = leadSlice.actions;
 
 export default leadSlice.reducer;

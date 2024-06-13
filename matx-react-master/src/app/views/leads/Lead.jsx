@@ -6,16 +6,21 @@ import LeadGrid from "./LeadGrid";
 
 const Lead = () => {
   const [open, setOpen] = useState(false);
+  const [editId,setEditId] = useState(null); //
 
   const toggleSidebar = () => {
-    
     setOpen(!open);
   };
+
+  const handleEdit = (id) => {
+    setEditId(id);
+    setOpen(true);
+  };  
   return (
     <div>
-      <LeadForm open={open} onClose={toggleSidebar} />
+      <LeadForm open={open} onClose={toggleSidebar} editId={editId} />
       <Button onClick={toggleSidebar}>Open drawer</Button>
-      <LeadGrid open={open}/>
+      <LeadGrid open={open} toggleSidebar={toggleSidebar} handleEdit={handleEdit}/>
     </div>
   );
 };
