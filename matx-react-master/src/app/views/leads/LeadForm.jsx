@@ -16,7 +16,11 @@ import SimpleForm from "../material-kit/forms/SimpleForm";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editLeadRequest, leadLoading } from "slice/leadSlice";
+import {
+  AddEditInfoRequest,
+  editLeadRequest,
+  leadLoading,
+} from "slice/leadSlice";
 import { Span } from "app/components/Typography";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import Lead from "./Lead";
@@ -33,6 +37,7 @@ const Container = styled("div")(({ theme }) => ({
 
 export default function LeadForm(props) {
   const d = useSelector((y) => y.lead?.editObj?.lead);
+  const { open, onClose, editId, setEditId } = props;
 
   const [state, setState] = useState({
     leadStatus: "",
@@ -43,9 +48,19 @@ export default function LeadForm(props) {
   });
 
   const dis = useDispatch();
+  useEffect(() => {
+    if (editId) {
+      dis(editLeadRequest(editId));
+    }
+  }, [editId]);
 
   const handleSubmit = () => {
-    dis(leadLoading(state));
+    if (editId) {
+      dis(AddEditInfoRequest({ ...state, _id: editId }));
+      setEditId(null);
+    } else {
+      dis(leadLoading(state));
+    }
     setState({
       leadStatus: "",
       leadName: "",
@@ -55,17 +70,7 @@ export default function LeadForm(props) {
     });
   };
 
-  const { open, onClose, editId } = props;
-
   useEffect(() => {
-    if (editId) {
-      dis(editLeadRequest(editId));
-    }
-  }, [editId]);
-
-  useEffect(() => {
-
-
     if (d) {
       setState({
         leadStatus: d.leadStatus,

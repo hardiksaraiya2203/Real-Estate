@@ -6,7 +6,8 @@ const initialState = {
   error: null,
   isLoading: false,
   deleteInfo: {},
-  editObj : {}
+  editObj: {},
+  AddEditInfo: {}
 };
 
 const leadSlice = createSlice({
@@ -36,40 +37,51 @@ const leadSlice = createSlice({
       state.isLoading = false;
       state.error = actions.payload;
     },
-    deleteLeadLoading: (state, actions) => {  
+    deleteLeadLoading: (state, actions) => {
       state.isLoading = true;
-    },  
-    deleteLeadSuccess: (state, actions) => {  
+    },
+    deleteLeadSuccess: (state, actions) => {
       state.isLoading = false;
       state.deleteInfo = actions.payload;
-    },  
-    deleteLeadError: (state, actions) => {      
+    },
+    deleteLeadError: (state, actions) => {
       state.isLoading = false;
       state.error = actions.payload;
-    },  
-    editLeadRequest: (state, actions) => {  
+    },
+    editLeadRequest: (state, actions) => {
 
-      state.isLoading = true;  
-  } ,
-  editLeadRequestError: (state, actions) => { 
+      state.isLoading = true;
+    },
+    editLeadRequestError: (state, actions) => {
 
-    state.isLoading = false;
-    state.error = actions.payload;
+      state.isLoading = false;
+      state.error = actions.payload;
 
-  },
-  editLeadRequestSuccess: (state, actions) => { 
+    },
+    editLeadRequestSuccess: (state, actions) => {
 
-    state.isLoading = false;
-        state.editObj = actions.payload;
-      
-  }
+      state.isLoading = false;
+      state.editObj = actions.payload;
+
+    },
+    AddEditInfoRequest: (state, action) => {
+      state.isLoading = true;
+    },
+    AddEditInfoSuc: (state, action) => {
+      state.isLoading = false;
+      state.AddEditInfo = action.payload;
+    },
+    AddEditInfoError: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    }
   }
 }
 
 );
 
 export const { leadLoading, leadSuccess, leadError, getLeadLoading,
-   getLeadSuccess, getLeadError,deleteLeadLoading,deleteLeadSuccess,deleteLeadError,
-   editLeadRequest,editLeadRequestError,editLeadRequestSuccess } = leadSlice.actions;
+  getLeadSuccess, getLeadError, deleteLeadLoading, deleteLeadSuccess, deleteLeadError,
+  editLeadRequest, editLeadRequestError, editLeadRequestSuccess ,AddEditInfoRequest,AddEditInfoSuc,AddEditInfoError} = leadSlice.actions;
 
 export default leadSlice.reducer;

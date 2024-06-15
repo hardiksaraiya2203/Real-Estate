@@ -4,7 +4,7 @@ const authFetch = axios.create({
   baseURL: "http://127.0.0.1:5001/api"
 });
 
-let token = JSON.parse(localStorage.getItem("token")).token;
+let token = JSON.parse(localStorage.getItem("token"))?.token;
 
 authFetch.interceptors.request.use(
   (request) => {

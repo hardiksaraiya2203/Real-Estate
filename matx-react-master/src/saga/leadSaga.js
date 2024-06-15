@@ -1,6 +1,9 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import addLead, { deleteLead, editLead, getLead } from "services/leadService";
+import addLead, { AddEditInfo, deleteLead, editLead, getLead } from "services/leadService";
 import {
+    AddEditInfoError,
+    AddEditInfoRequest,
+    AddEditInfoSuc,
     deleteLeadError,
     deleteLeadLoading,
     deleteLeadSuccess,
@@ -69,3 +72,16 @@ function* asyncLeadEdit(action) {
 export function* watcherLeadEdit() {
     yield takeEvery(editLeadRequest().type, asyncLeadEdit);
 }
+
+function* asyncLeadEditInfo(action) {
+    try {
+      let d1 = yield call(AddEditInfo, action.payload);
+      yield put(AddEditInfoSuc(d1));
+    } catch (error) {
+      yield put(AddEditInfoError(error));
+    }
+  }
+  
+  export function* watcherLeadEditInfo() {
+    yield takeEvery(AddEditInfoRequest().type, asyncLeadEditInfo);
+  }

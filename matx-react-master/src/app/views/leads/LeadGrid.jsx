@@ -20,7 +20,7 @@ import CallIcon from "@mui/icons-material/Call";
 import EmailIcon from "@mui/icons-material/Email";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
-const LeadGrid = ({ open, toggleSidebar,handleEdit }) => {
+const LeadGrid = ({ open, toggleSidebar, handleEdit }) => {
   const sel = useSelector((state) => state?.lead?.data);
   const [dialogOpen, setDialogOpen] = useState(false);
   const dis = useDispatch();
@@ -33,10 +33,8 @@ const LeadGrid = ({ open, toggleSidebar,handleEdit }) => {
 
   const [ids, setId] = useState(null);
   const open1 = Boolean(anchorEl);
-  const handleClick = (event, props) => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    // setId(props);
-    // console.log(ids);
   };
   const handleClose = () => {
     setAnchorEl(null);
